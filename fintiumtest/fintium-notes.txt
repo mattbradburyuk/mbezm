@@ -1,0 +1,306 @@
+fintium notes
+
+start broker webserver
+
+java -jar ./webserver/brokerserver-0.1.jar --server.port=10053 --config.rpc.host=localhost --config.rpc.port=10006 --config.rpc.username=user1 --config.rpc.password=test
+
+
+start partyA webserver
+
+java -jar ./webserver/traderserver-0.1.jar --server.port=10050 --config.rpc.host=localhost --config.rpc.port=10009 --config.rpc.username=user1 --config.rpc.password=test --config.broker.apiURL=http://localhost:10053/api/
+
+
+Import to postman
+
+(import from menu, then paste raw text)
+
+{
+    "info": {
+        "_postman_id": "91e4bf7e-dcad-4363-90bb-5051d8561f0b",
+        "name": "Finteum",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Create Order",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"orderType\": \"Bid\",\n  \"amount\": {\n            \"quantity\": 1200000,\n            \"token\": \"AUD\"},\n  \"rate\" : \"62\",\n  \"valueHorizon\": \"T0\",\n  \"marketType\": \"Limit\",\n  \"party\": \"ThirdParty\",\n  \"collateral\": \"GC\",\n  \"ccp\": \"\",\n  \"maturity\": \"2019-03-15T14:00:00Z\",\n  \"validUntil\": \"2019-03-15T15:59:00Z\"\n}"
+                },
+                "url": {
+                    "raw": "http://67.207.71.250:10050/api/orders",
+                    "protocol": "http",
+                    "host": [
+                        "67",
+                        "207",
+                        "71",
+                        "250"
+                    ],
+                    "port": "10050",
+                    "path": [
+                        "api",
+                        "orders"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "List Orders",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": ""
+                },
+                "url": {
+                    "raw": "http://localhost:10050/api/orders",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "10050",
+                    "path": [
+                        "api",
+                        "orders"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get Market (Trader)",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": ""
+                },
+                "url": {
+                    "raw": "http://localhost:10050/api/market/GBP-T0-ThirdParty-GC",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "10050",
+                    "path": [
+                        "api",
+                        "market",
+                        "GBP-T0-ThirdParty-GC"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get Market (Broker)",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": ""
+                },
+                "url": {
+                    "raw": "http://localhost:10053/api/market/GBP-T0-ThirdParty-GC",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "10053",
+                    "path": [
+                        "api",
+                        "market",
+                        "GBP-T0-ThirdParty-GC"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get Market History (Trader)",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": ""
+                },
+                "url": {
+                    "raw": "http://127.0.0.1:10050/api/market/AUD-T0-ThirdParty-GC/history?since=2019-03-07T01:30:00.000-05:00",
+                    "protocol": "http",
+                    "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                    ],
+                    "port": "10050",
+                    "path": [
+                        "api",
+                        "market",
+                        "AUD-T0-ThirdParty-GC",
+                        "history"
+                    ],
+                    "query": [
+                        {
+                            "key": "since",
+                            "value": "2019-03-07T01:30:00.000-05:00"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get Market History (Broker)",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": ""
+                },
+                "url": {
+                    "raw": "http://localhost:10053/api/market/GBP-T0-ThirdParty-GC/history",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "10053",
+                    "path": [
+                        "api",
+                        "market",
+                        "GBP-T0-ThirdParty-GC",
+                        "history"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get Cash Balances",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": ""
+                },
+                "url": {
+                    "raw": "http://127.0.0.1:10050/api/cash",
+                    "protocol": "http",
+                    "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                    ],
+                    "port": "10050",
+                    "path": [
+                        "api",
+                        "cash"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Issue Cash",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "name": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n\t\"quantity\": 20000000000,\n\t\"token\": \"AUD\"\n}"
+                },
+                "url": {
+                    "raw": "http://127.0.0.1:10050/api/cash",
+                    "protocol": "http",
+                    "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                    ],
+                    "port": "10050",
+                    "path": [
+                        "api",
+                        "cash"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "GET trades (Trader B)",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": ""
+                },
+                "url": {
+                    "raw": "http://localhost:10056/api/trades",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "10056",
+                    "path": [
+                        "api",
+                        "trades"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "GET trades (Trader A)",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": ""
+                },
+                "url": {
+                    "raw": "http://localhost:10050/api/trades",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "10050",
+                    "path": [
+                        "api",
+                        "trades"
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}

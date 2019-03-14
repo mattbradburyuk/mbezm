@@ -1,0 +1,62 @@
+1. Doorman (from doorman directory)
+
+java -jar ../jars/doorman-0.3.jar --config-file doorman.conf
+
+2 Network map (from netmap directrory)
+
+java -jar ../jars/doorman-0.3.jar --config-file network-map.conf
+
+3 Notary (from notary directory)
+
+java -jar ../jars/corda-4.0.jar
+
+ports:
+
+12000: doorman
+12010: notary
+12020: network netmap
+
+
+
+4) test nodes (from their node directory)
+
+java -jar ../../jars/corda-4.0.jar
+
+ssh ports
+node1: 2221
+node2: 2222
+node3: 2223
+
+
+5) ssh into nodes
+
+ssh -p 2221 localhost -l user1
+ssh -p 2222 localhost -l user1
+ssh -p 2223 localhost -l user1
+
+password: test
+
+6) get snapshot of the network map
+
+run networkMapSnapshot
+
+7) run YoFlow
+
+flow start YoFlow target: "O=Party2, L=Paris, C=FR"
+
+8) check vault for created states:
+
+run vaultQuery contractStateType: net.corda.yo.YoState
+
+
+
+fintium notes
+
+start broker webserver
+
+java -jar ./webserver/brokerserver-0.1.jar --server.port=10053 --config.rpc.host=localhost --config.rpc.port=10006 --config.rpc.username=user1 --config.rpc.password=test
+
+
+start partyA webserver
+
+java -jar ./webserver/traderserver-0.1.jar --server.port=10050 --config.rpc.host=localhost --config.rpc.port=10009 --config.rpc.username=user1 --config.rpc.password=test --config.broker.apiURL=http://localhost:10053/api/
